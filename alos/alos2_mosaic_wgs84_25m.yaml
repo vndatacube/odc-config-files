@@ -1,0 +1,93 @@
+source_type: alos2_palsar_mosaic
+output_type: alos2_mosaic_25m_vietnam
+
+description: ALOS-2 PALSAR-2 tile in DN format processed for the Data Cube
+
+location: '/work/apps/datacube/DATA/ingested_data/vietnam/ALOS/Mosaic'
+file_path_template: 'ALOS2_PALSAR2_4326_25m_{tile_index[0]}_{tile_index[1]}_{start_time}.nc'
+global_attributes:
+  title: Vietnam Data Cube ALOS-2 PALSAR-2 Gamma0 Mosaic
+  summary: ALOS-2 PALSAR-2 data derived from JJ-FAST ScanSAR data.
+  history: This data represents a tile and reprojection of ALOS-2 PALSAR-2 data.
+  institution: JAXA
+  instrument: PALSAR-2
+  cdm_data_type: Grid
+  keywords: VN/VNSC,ALOS-2,PALSAR-2,JAXA,RESTEC,EARTH SCIENCE
+  keywords_vocabulary: GCMD
+  platform: ALOS-2
+  processing_level: L2
+  product_version: '1.0.0'
+  product_suite: ALOS
+  project: Vietnam Data Cube
+  publisher_email: datacube@vnsc.org.vn
+  publisher_name: Vietnam Data Cube
+  publisher_url: www.vnsc.org.vn
+  coverage_content_type: physicalMeasurement
+  license: https://creativecommons.org/licenses/by/4.0/
+  naming_authority: vn.org.vnsc
+  acknowledgment: ALOS-2 data is provided by JAXA and RESTEC
+
+#ingestion_bounds:
+#  left: 100.0
+#  bottom: 5.0
+#  right: 115.0
+#  top: 20.0
+
+storage:
+  driver: NetCDF CF
+
+  crs: EPSG:4326
+  tile_size:
+          longitude: 1.0
+          latitude: 1.0
+  resolution:
+          longitude: 0.000222222222222
+          latitude: -0.000222222222222
+  chunking:
+      longitude: 250
+      latitude: 250
+      time: 1
+  dimension_order: ['time', 'latitude', 'longitude']
+
+fuse_data: copy
+
+measurements:
+    - name: hh
+      dtype: int16
+      nodata: 0
+      units: 'DN'
+      resampling_method: nearest
+      src_varname: 'hh_gamma0'
+      zlib: True
+      attrs:
+          alias: "HH"
+    - name: hv
+      dtype: int16
+      nodata: 0
+      units: 'DN'
+      resampling_method: nearest
+      src_varname: 'hv_gamma0'
+      zlib: True
+      attrs:
+          alias: "HV"
+    - name: date
+      dtype: int16
+      nodata: 0
+      units: '1'
+      resampling_method: nearest
+      src_varname: 'observation_date'
+      zlib: True
+    - name: incidence_angle
+      dtype: uint8
+      nodata: 0
+      units: '1'
+      resampling_method: nearest
+      src_varname: 'incidence_angle'
+      zlib: True
+    - name: mask
+      dtype: uint8
+      nodata: 0
+      units: '1'
+      resampling_method: nearest
+      src_varname: 'mask'
+      zlib: True
